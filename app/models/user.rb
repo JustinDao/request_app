@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
   belongs_to :residence
   belongs_to :building
-  has_many :item
+  has_many :item, :dependent => :destroy
 
   validates_presence_of :residence
 

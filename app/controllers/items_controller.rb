@@ -1,8 +1,8 @@
 class ItemsController < ApplicationController
-  # GET /items
-  # GET /items.json
+  before_filter :authenticate_user!
+
   def index
-    @items = Item.all
+    @items = Item.where(user_id: current_user.id)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -10,10 +10,11 @@ class ItemsController < ApplicationController
     end
   end
 
-  # GET /items/1
-  # GET /items/1.json
   def show
     @item = Item.find(params[:id])
+    if(@item.user_id != current_user.id)
+      redirect_to user_items
+    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -21,9 +22,8 @@ class ItemsController < ApplicationController
     end
   end
 
-  # GET /items/new
-  # GET /items/new.json
   def new
+    @user = current_user
     @item = Item.new
     @item_types = ItemType.all.sort_by{|e| e[:name]}
 
@@ -33,14 +33,11 @@ class ItemsController < ApplicationController
     end
   end
 
-  # GET /items/1/edit
   def edit
     @item_types = ItemType.all.sort_by{|e| e[:name]}
     @item = Item.find(params[:id])
   end
 
-  # POST /items
-  # POST /items.json
   def create
     @item_types = ItemType.all.sort_by{|e| e[:name]}
     @item = Item.new(name: params[:item][:name])
@@ -54,7 +51,7 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       if @item.save
-        format.html { redirect_to @item, notice: 'Item was successfully created.' }
+        format.html { redirect_to user_items_path, notice: 'Item was successfully created.' }
         format.json { render json: @item, status: :created, location: @item }
       else
         format.html { render action: "new" }
@@ -63,14 +60,12 @@ class ItemsController < ApplicationController
     end
   end
 
-  # PUT /items/1
-  # PUT /items/1.json
   def update
     @item = Item.find(params[:id])
 
     respond_to do |format|
       if @item.update_attributes(params[:item])
-        format.html { redirect_to @item, notice: 'Item was successfully updated.' }
+        format.html { redirect_to user_items_path, notice: 'Item was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -79,14 +74,12 @@ class ItemsController < ApplicationController
     end
   end
 
-  # DELETE /items/1
-  # DELETE /items/1.json
   def destroy
     @item = Item.find(params[:id])
     @item.destroy
 
     respond_to do |format|
-      format.html { redirect_to items_url }
+      format.html { redirect_to user_items_path }
       format.json { head :no_content }
     end
   end
