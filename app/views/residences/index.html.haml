@@ -1,0 +1,19 @@
+%h1 Listing residences
+
+%table
+  %tr
+    %th Name
+    %th
+    %th
+    %th
+
+  - @residences.each do |residence|
+    %tr
+      %td= residence.name
+      %td= link_to 'Show', residence
+      %td= link_to 'Edit', edit_residence_path(residence)
+      %td= link_to 'Destroy', residence, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Residence', new_residence_path
