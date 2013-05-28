@@ -11,13 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130528142656) do
+ActiveRecord::Schema.define(:version => 20130528161221) do
 
   create_table "buildings", :force => true do |t|
     t.string   "name"
-    t.string   "room"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "residence_id"
   end
 
   create_table "item_types", :force => true do |t|
@@ -28,8 +28,10 @@ ActiveRecord::Schema.define(:version => 20130528142656) do
 
   create_table "items", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "user_id"
+    t.integer  "item_type_id"
   end
 
   create_table "residences", :force => true do |t|
@@ -53,6 +55,8 @@ ActiveRecord::Schema.define(:version => 20130528142656) do
     t.datetime "updated_at",                             :null => false
     t.string   "first_name"
     t.string   "last_name"
+    t.integer  "residence_id"
+    t.integer  "building_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
