@@ -25,6 +25,7 @@ class ItemsController < ApplicationController
   # GET /items/new.json
   def new
     @item = Item.new
+    @item_types = ItemType.all.sort_by{|e| e[:name]}
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,13 +35,22 @@ class ItemsController < ApplicationController
 
   # GET /items/1/edit
   def edit
+    @item_types = ItemType.all.sort_by{|e| e[:name]}
     @item = Item.find(params[:id])
   end
 
   # POST /items
   # POST /items.json
   def create
-    @item = Item.new(params[:item])
+    @item_types = ItemType.all.sort_by{|e| e[:name]}
+    @item = Item.new(name: params[:item][:name])
+    @user = current_user
+    @item_type_id = params[:item][:item_type]
+
+    @item.user_id = @user.id
+    if(@item_type_id != nil)
+      @item.item_type = ItemType.find(@item_type_id)
+    end
 
     respond_to do |format|
       if @item.save

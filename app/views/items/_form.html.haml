@@ -9,5 +9,9 @@
   .field
     = f.label :name
     = f.text_field :name
+
+  .field
+    = f.label :item_type
+    = f.select :item_type, @item_types.map{ |i| [i.name, i.id] }
   .actions
     = f.submit 'Save'
