@@ -3,7 +3,7 @@ RequestApp::Application.routes.draw do
 
   match '/home', :to => "home#show"
 
-  resources :user, :only => [] do
+  resources :users, :only => [] do
     resources :items do
       collection do
         post 'search'

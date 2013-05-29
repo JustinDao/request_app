@@ -2,30 +2,36 @@ class ItemsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @user_id = params[:user_id]
+    @user_id = params[:user_id].to_i
 
-    @items = Item.where(user_id: current_user.id)
+    if(@user_id != 0 && @user_id != current_user.id)
+      redirect_to user_items_path(current_user)
+    else
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @items }
+      @items = Item.where(user_id: current_user.id)
+
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: @items }
+      end
     end
   end
 
   def search
+    @user_id = current_user.id
     val = params[:search_box]
     type = params[:type].to_i
 
     if(val == "" || val == nil)
       @items = []    
     elsif(type == 0)
-      @items = Item.where("name ILIKE ?", "%#{val}%")
+      @items = Item.where("name ILIKE ?", "%#{val}%").select{|e| e.user_id != @user_id}
     else
-      @items = Item.where("name ILIKE ?", "%#{val}%").select{|e| e.item_type_id == type}
+      @items = Item.where("name ILIKE ?", "%#{val}%").select{|e| e.item_type_id == type}.select{|e| e.user_id != @user_id}
     end
 
     respond_to do |format|
-      format.html { render :index }
+      format.html { render :search }
       format.json { render json: @items }
     end
   end

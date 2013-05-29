@@ -1,0 +1,15 @@
+%h1 Searching items
+
+%table
+  %tr
+    %th Name
+    %th User
+    %th
+    %th
+
+  - @items.each do |item|
+    %tr
+      %td= item.name
+      %td
+        = item.user.first_name
+        = item.user.last_name 
