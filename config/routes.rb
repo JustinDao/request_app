@@ -4,7 +4,11 @@ RequestApp::Application.routes.draw do
   match '/home', :to => "home#show"
 
   resources :user, :only => [] do
-    resources :items
+    resources :items do
+      collection do
+        post 'search'
+      end
+    end
   end
 
   authenticated :user do

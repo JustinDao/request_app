@@ -13,14 +13,18 @@
       = link_to 'Home', root_path
       = link_to 'Edit Account', edit_user_registration_path
       = link_to 'Sign out', destroy_user_session_path, :method => :delete
-      %input{:type => "search", :placeholder => "Search...", :id => "search_box"}
-      %select{:id => "type_select"}
+
+      = form_tag search_user_items_path(current_user), method: :post
+      = text_field_tag "search_box", nil, :placeholder => "Search...", :id => "search_box"
+
+      %select{:name => "type", :id => "type_select"}
         %option{:value => 0}
           All
         - ItemType.all.sort_by{|e| e[:name]}.each do |t|
           %option{:value => (t.id)}
             = t.name
-      - # = button_to "Search", new_user_registration_path
+      = submit_tag "Search"
+
     - else
       = link_to 'Register', new_user_registration_path
       or

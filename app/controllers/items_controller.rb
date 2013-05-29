@@ -12,6 +12,24 @@ class ItemsController < ApplicationController
     end
   end
 
+  def search
+    val = params[:search_box]
+    type = params[:type].to_i
+
+    if(val == "" || val == nil)
+      @items = []    
+    elsif(type == 0)
+      @items = Item.where("name ILIKE ?", "%#{val}%")
+    else
+      @items = Item.where("name ILIKE ?", "%#{val}%").select{|e| e.item_type_id == type}
+    end
+
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @items }
+    end
+  end
+
   def show
     @item = Item.find(params[:id])
 
