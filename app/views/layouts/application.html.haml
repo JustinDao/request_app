@@ -1,20 +1,28 @@
 !!!
 %html
-	%head
-		%title RequestApp
-		= stylesheet_link_tag    "application", :media => "all"
-		= javascript_include_tag "application"
-		= csrf_meta_tags
+  %head
+    %title RequestApp
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
 %body
-	.user_nav
-		- if user_signed_in?
-			Signed in as 
-			= current_user.email
-			= link_to 'Home', root_path
-			= link_to 'Edit Account', edit_user_registration_path
-			= link_to 'Sign out', destroy_user_session_path, :method => :delete
-		- else
-			= link_to 'Register', new_user_registration_path
-			or
-			= link_to 'Sign in', new_user_session_path
-	= yield
+  .user_nav
+    - if user_signed_in?
+      Signed in as 
+      = current_user.email
+      = link_to 'Home', root_path
+      = link_to 'Edit Account', edit_user_registration_path
+      = link_to 'Sign out', destroy_user_session_path, :method => :delete
+      %input{:type => "search", :placeholder => "Search...", :id => "search_box"}
+      %select{:id => "type_select"}
+        %option{:value => 0}
+          All
+        - ItemType.all.sort_by{|e| e[:name]}.each do |t|
+          %option{:value => (t.id)}
+            = t.name
+      - # = button_to "Search", new_user_registration_path
+    - else
+      = link_to 'Register', new_user_registration_path
+      or
+      = link_to 'Sign in', new_user_session_path
+  = yield

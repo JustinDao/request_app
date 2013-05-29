@@ -2,6 +2,8 @@ class ItemsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
+    @user_id = params[:user_id]
+
     @items = Item.where(user_id: current_user.id)
 
     respond_to do |format|
@@ -12,9 +14,6 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
-    if(@item.user_id != current_user.id)
-      redirect_to user_items
-    end
 
     respond_to do |format|
       format.html # show.html.erb

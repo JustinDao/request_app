@@ -1,7 +1,9 @@
 RequestApp::Application.routes.draw do
   devise_for :users, :controllers => {:registrations => "registrations"}
 
-  resources :users, :only => [] do
+  match '/home', :to => "home#show"
+
+  resources :user, :only => [] do
     resources :items
   end
 
