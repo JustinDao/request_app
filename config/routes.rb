@@ -1,23 +1,23 @@
 RequestApp::Application.routes.draw do
-  resources :item_types, :only => [:index, :show]
-
-  resources :buildings, :only => [:index, :show]
-
-  resources :residences, :only => [:index, :show]
-
   devise_for :users, :controllers => {:registrations => "registrations"}
 
-  resources :users do
+  resources :users, :only => [] do
     resources :items
   end
 
   authenticated :user do
-    get '/' => 'users/:user_id/items#index'
+    root :to =>  "items#index"
   end
 
   devise_scope :user do
     root :to => 'devise/sessions#new'
   end
+
+  resources :item_types, :only => [:index, :show]
+
+  resources :buildings, :only => [:index, :show]
+
+  resources :residences, :only => [:index, :show]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
