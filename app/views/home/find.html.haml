@@ -1,0 +1,17 @@
+%h1 Your items
+
+%table
+  %tr
+    %th Name
+    %th Type
+    %th
+
+  - @items.each do |item|
+    %tr
+      %td= item.name
+      %td= item.item_type.name
+      %td= link_to 'Show', user_item_path(current_user, item)
+
+%br
+
+= link_to 'New Item', new_user_item_path(current_user)

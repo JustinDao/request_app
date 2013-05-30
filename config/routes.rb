@@ -3,6 +3,7 @@ RequestApp::Application.routes.draw do
 
   match '/home', :to => "home#index"
   match '/browse', :to => "home#browse"
+  match 'items/find', :to => "home#find"
 
   resources :users, :only => [] do
     resources :items do

@@ -1,7 +1,5 @@
 $(document).ready(function(){
-  document.getElementById("user_residence").selectedIndex = -1;
-
-  $("#user_residence").bind("change", function(){
+    $("#user_residence").bind("change", function(){
     $("#user_building").empty();
     var value = $(this).find(":selected").val();
     $.ajax({

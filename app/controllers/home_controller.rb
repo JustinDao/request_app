@@ -15,4 +15,14 @@ class HomeController < ApplicationController
       format.json { render json: @items }
     end
   end
+
+  def find
+    @item_name = params[:name]
+    @items = Item.where("name ILIKE ?", "%#{@item_name}%")
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @items }
+    end
+  end
 end

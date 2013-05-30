@@ -41,14 +41,9 @@ class ItemsController < ApplicationController
     @user_id = params[:user_id].to_i
     @item = Item.find(params[:id])
 
-    if(@user_id != 0 && ( @user_id != current_user.id || @item.user_id != current_user.id ))
-      redirect_to user_items_path(current_user)
-    else
-
-      respond_to do |format|
-        format.html # show.html.erb
-        format.json { render json: @item }
-      end
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @item }
     end
   end
 
@@ -64,10 +59,18 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    @user = current_user
-    @item_types = ItemType.all.sort_by{|e| e[:name]}
+
     @item = Item.find(params[:id])
-    @user = current_user
+    @user_id = params[:user_id].to_i
+
+    if(@user_id != 0 && ( @user_id != current_user.id || @item.user_id != current_user.id ))
+      redirect_to user_items_path(current_user)
+    else
+
+      @user = current_user
+      @item_types = ItemType.all.sort_by{|e| e[:name]}
+      
+    end
   end
 
   def create
