@@ -1,0 +1,26 @@
+%h1 Browse
+
+.row-fluid
+  .span12
+    .row-fluid
+      .span6
+        %h3 
+          Browse by Name:
+          %select{name: "item_name", id: "item_name", value: -1}
+            - ('A'..'Z').each do |a|
+              %option{:value => (a)}
+                = a
+      .span6
+        %h3 
+          Browse by Type:
+          %select{name: "item_type", id: "item_type"}
+            - @item_types.each do |a|
+              %option{:value => (a.id)}
+                = a.name
+%hr
+
+.span12{:name => "item_list", :id => "item_list"}
+
+:javascript
+  document.getElementById("item_name").selectedIndex = -1;
+  document.getElementById("item_type").selectedIndex = -1;

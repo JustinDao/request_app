@@ -2,6 +2,7 @@ RequestApp::Application.routes.draw do
   devise_for :users, :controllers => {:registrations => "registrations"}
 
   match '/home', :to => "home#index"
+  match '/browse', :to => "home#browse"
 
   resources :users, :only => [] do
     resources :items do

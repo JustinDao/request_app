@@ -9,7 +9,7 @@
     %th
 
   - @items.each do |item|
-    %tr{id: "item_list"}
+    %tr
       %td= item.name
       %td= item.item_type.name
       %td= link_to 'Show', user_item_path(current_user, item)

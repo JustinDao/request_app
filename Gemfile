@@ -10,6 +10,9 @@ gem 'pg_search'
 gem 'devise'
 gem 'haml'
 gem 'haml-rails'
+gem 'bootstrap-sass'
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
 
 
 group :test, :development do

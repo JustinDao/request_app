@@ -5,17 +5,11 @@ class ItemsController < ApplicationController
   def index
     @user_id = params[:user_id].to_i
 
-    if(@user_id != 0 && @user_id != current_user.id)
-      redirect_to user_items_path(current_user)
-    else
+    @items = Item.order(sort_column + " " + sort_direction).select{|e| e.user_id == @user_id}
 
-
-      @items = Item.order(sort_column + " " + sort_direction).select{|e| e.user_id == current_user.id}
-
-      respond_to do |format|
-        format.html # index.html.erb
-        format.json { render json: @items }
-      end
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @items }
     end
   end
 
