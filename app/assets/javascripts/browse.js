@@ -32,7 +32,7 @@ $(document).ready(function() {
 
         $.each(data, function(){
           var n = this.name.toLowerCase();
-          if(item_type != undefined) {
+          if(item_type != 0 && item_type != undefined) {
             if( n[0] == item_name.toLowerCase() && this.item_type_id == item_type ) {
               if(get1(n) > 1){
                 if(get2(n) == undefined){
@@ -56,6 +56,10 @@ $(document).ready(function() {
             }
           }
           else {
+            if(item_type == undefined){
+              item_type = 0;
+              document.getElementById("item_type").selectedIndex = 0;
+            }
             if(n[0] == item_name.toLowerCase()) {
               if(get1(n) > 1){
                 if(get2(n) == undefined){
@@ -115,7 +119,7 @@ $(document).ready(function() {
 
         $.each(data, function(){
           var n = this.name.toLowerCase();
-          if(item_type != undefined) {
+          if(item_type != 0 || item_type != undefined) {
             if( n[0] == item_name.toLowerCase() && this.item_type_id == item_type ) {
               if(get1(n) > 1){
                 if(get2(n) == undefined){
