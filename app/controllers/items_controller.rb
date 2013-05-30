@@ -42,11 +42,17 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @user_id = params[:user_id].to_i
     @item = Item.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @item }
+    if(@user_id != 0 && ( @user_id != current_user.id || @item.user_id != current_user.id ))
+      redirect_to user_items_path(current_user)
+    else
+
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @item }
+      end
     end
   end
 
