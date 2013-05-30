@@ -57,6 +57,7 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    @user = current_user
     @item_types = ItemType.all.sort_by{|e| e[:name]}
     @item = Item.find(params[:id])
   end
@@ -84,10 +85,16 @@ class ItemsController < ApplicationController
   end
 
   def update
+    @user = current_user
     @item = Item.find(params[:id])
 
+    @item_type = ItemType.find(params[:item][:item_type])
+
+    @item.item_type_id = @item_type.id
+    @item.name = params[:item][:name]
+
     respond_to do |format|
-      if @item.update_attributes(params[:item])
+      if @item.save
         format.html { redirect_to user_items_path, notice: 'Item was successfully updated.' }
         format.json { head :no_content }
       else
