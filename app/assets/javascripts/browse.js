@@ -102,6 +102,13 @@ $(document).ready(function() {
         return check[k];
     }
 
+    if(item_type == 0 && item_name == undefined){
+      $('#item_list').append($("<p/>", {
+        text: "Search for a specific type, or also search for a letter!"
+      }));
+      return; 
+    }
+
     $.ajax({
       url: '/browse/',
       dataType: 'json',
@@ -119,7 +126,7 @@ $(document).ready(function() {
 
         $.each(data, function(){
           var n = this.name.toLowerCase();
-          if(item_type != 0 || item_type != undefined) {
+          if(item_type != 0 && item_name != undefined) {
             if( n[0] == item_name.toLowerCase() && this.item_type_id == item_type ) {
               if(get1(n) > 1){
                 if(get2(n) == undefined){
@@ -142,8 +149,31 @@ $(document).ready(function() {
               }
             }
           }
-          else {
+          else if(item_type == 0 && item_name != undefined){
             if(n[0] == item_name.toLowerCase()) {
+              if(get1(n) > 1){
+                if(get2(n) == undefined){
+                  check[n] = 1;
+                  $('#item_list').append($("<a/>", {
+                    href: "/items/find?name=" + this.name,
+                    text: this.name
+                  }));
+                  $('#item_list').append($("<br/>", {           
+                  }));
+                }
+              }
+              else{
+                $('#item_list').append($("<a/>", {
+                  href: "/users/" + this.user_id + "/items" + this.id,
+                  text: this.name
+                }));
+                $('#item_list').append($("<br/>", {           
+                }));
+              }
+            }
+          }
+          else {
+            if(this.item_type_id == item_type) {
               if(get1(n) > 1){
                 if(get2(n) == undefined){
                   check[n] = 1;
