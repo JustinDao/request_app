@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_filter :authenticate_user!
+  helper_method :sort_column, :sort_direction
 
   def index
     @user_id = params[:user_id].to_i
@@ -8,7 +9,8 @@ class ItemsController < ApplicationController
       redirect_to user_items_path(current_user)
     else
 
-      @items = Item.where(user_id: current_user.id)
+
+      @items = Item.order(sort_column + " " + sort_direction).select{|e| e.user_id == current_user.id}
 
       respond_to do |format|
         format.html # index.html.erb
@@ -23,8 +25,8 @@ class ItemsController < ApplicationController
     type = params[:type].to_i
 
     if(val == "" || val == nil)
-      @your_items = Item.where(user_id: @user_id)
-      @items = []    
+      @items = nil
+      @your_items = nil 
     elsif(type == 0)
       @i = Item.where("name ILIKE ?", "%#{val}%")
       @your_items = @i.select{|e| e.user_id == @user_id}
@@ -124,5 +126,15 @@ class ItemsController < ApplicationController
       format.html { redirect_to user_items_path }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def sort_column
+    Item.column_names.include?(params[:sort]) ? params[:sort] : "name"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end

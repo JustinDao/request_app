@@ -2,14 +2,16 @@
 
 %table
   %tr
-    %th Name
+    %th= sortable "name"
+    %th= sortable "item_type_id", "Type"
     %th
     %th
     %th
 
   - @items.each do |item|
-    %tr
+    %tr{id: "item_list"}
       %td= item.name
+      %td= item.item_type.name
       %td= link_to 'Show', user_item_path(current_user, item)
       %td= link_to 'Edit', edit_user_item_path(current_user, item)
       %td= link_to 'Destroy', user_item_path(current_user, item), :method => :delete, :data => { :confirm => 'Are you sure?' }

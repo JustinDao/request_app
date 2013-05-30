@@ -1,6 +1,9 @@
 %h1 Searching items
 
-- if(@your_items.size == 0 && @items.size == 0)
+- if(@your_items == nil && @items == nil)
+  %h3 We can't search for nothing! Type something in the serach box to start looking!
+
+- elsif(@your_items.size == 0 && @items.size == 0)
   %h3 We can't find anything that matches your search. :(
 - else
   - if(@your_items.size != 0)
