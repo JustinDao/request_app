@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   before_filter :authenticate_user!
 
-  def show
+  def index
     @user_id = current_user.id
     @items = Item.where(user_id: @user_id)
   end

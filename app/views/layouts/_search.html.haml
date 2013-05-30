@@ -1,4 +1,4 @@
-= form_tag search_user_items_path(current_user), method: :post
-= text_field_tag "search_box", nil, :placeholder => "Search...", :id => "search_box"
-= item_type_select
-= submit_tag "Search"
+= form_tag search_user_items_path(current_user), method: :post do
+  = text_field_tag "search_box", nil, :placeholder => "Search...", :id => "search_box"
+  = item_type_select
+  = submit_tag "Search"

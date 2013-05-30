@@ -59,6 +59,7 @@ class ItemsController < ApplicationController
   def edit
     @item_types = ItemType.all.sort_by{|e| e[:name]}
     @item = Item.find(params[:id])
+    @user = current_user
   end
 
   def create

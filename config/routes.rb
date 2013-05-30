@@ -1,7 +1,7 @@
 RequestApp::Application.routes.draw do
   devise_for :users, :controllers => {:registrations => "registrations"}
 
-  match '/home', :to => "home#show"
+  match '/home', :to => "home#index"
 
   resources :users, :only => [] do
     resources :items do
@@ -12,7 +12,7 @@ RequestApp::Application.routes.draw do
   end
 
   authenticated :user do
-    root :to =>  "items#index"
+    root :to =>  redirect("/home")
   end
 
   devise_scope :user do
