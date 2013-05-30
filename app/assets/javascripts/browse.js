@@ -74,7 +74,7 @@ $(document).ready(function() {
               }
               else{
                 $('#item_list').append($("<a/>", {
-                  href: "/users/" + this.user_id + "/items" + this.id,
+                  href: "/users/" + this.user_id + "/items/" + this.id,
                   text: this.name
                 }));
                 $('#item_list').append($("<br/>", {           
@@ -141,7 +141,7 @@ $(document).ready(function() {
               }
               else{
                 $('#item_list').append($("<a/>", {
-                  href: "/users/" + this.user_id + "/items" + this.id,
+                  href: "/users/" + this.user_id + "/items/" + this.id,
                   text: this.name
                 }));
                 $('#item_list').append($("<br/>", {           
