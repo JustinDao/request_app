@@ -23,11 +23,16 @@ class ItemsController < ApplicationController
     type = params[:type].to_i
 
     if(val == "" || val == nil)
+      @your_items = Item.where(user_id: @user_id)
       @items = []    
     elsif(type == 0)
-      @items = Item.where("name ILIKE ?", "%#{val}%").select{|e| e.user_id != @user_id}
+      @i = Item.where("name ILIKE ?", "%#{val}%")
+      @your_items = @i.select{|e| e.user_id == @user_id}
+      @items = @i.select{|e| e.user_id != @user_id}
     else
-      @items = Item.where("name ILIKE ?", "%#{val}%").select{|e| e.item_type_id == type}.select{|e| e.user_id != @user_id}
+      @i = Item.where("name ILIKE ?", "%#{val}%").select{|e| e.item_type_id == type}
+      @your_items = @i.select{|e| e.user_id == @user_id}
+      @items = @i.select{|e| e.user_id != @user_id}
     end
 
     respond_to do |format|

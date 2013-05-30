@@ -3,7 +3,7 @@ class HomeController < ApplicationController
 
   def index
     @user_id = current_user.id
-    @items = Item.where(user_id: @user_id)
+    @user_items = Item.where(user_id: @user_id)
   end
 
 end

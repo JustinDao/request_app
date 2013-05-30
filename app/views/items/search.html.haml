@@ -1,15 +1,29 @@
 %h1 Searching items
 
+%h2 Your Items
+
 %table
   %tr
     %th Name
-    %th User
+    %th 
     %th
+    %th
+
+  - @your_items.each do |item|
+    %tr
+      %td= link_to item.name, user_item_path(current_user, item)
+
+%h3 Others' Items
+
+%table
+  %tr
+    %th Name
+    %th 
+    %th User
     %th
 
   - @items.each do |item|
     %tr
-      %td= item.name
+      %td= link_to item.name, user_item_path(item.user, item)
       %td
-        = item.user.first_name
-        = item.user.last_name 
+      %td= link_to item.user.first_name + " " + item.user.last_name, user_items_path(item.user)

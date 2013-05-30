@@ -11,7 +11,8 @@
       Signed in as 
       = current_user.email
       = link_to 'Home', root_path
-      = link_to 'Edit Account', edit_user_registration_path
+      = link_to 'Your Items', user_items_path(current_user)
+      = link_to 'Account Settings', edit_user_registration_path
       = link_to 'Sign out', destroy_user_session_path, :method => :delete
       = render 'layouts/search'
 
