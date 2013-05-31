@@ -2,6 +2,7 @@
 
 %table
   %tr
+    %th
     %th= sortable "name"
     %th= sortable "item_type_id", "Type"
     %th
@@ -10,6 +11,7 @@
 
   - @items.each do |item|
     %tr
+      %td= image_tag item.image_url(:thumb) if item.image?
       %td= item.name
       %td= item.item_type.name
       %td= link_to 'Show', user_item_path(current_user, item)

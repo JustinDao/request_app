@@ -100,9 +100,21 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
 
     @item_type = ItemType.find(params[:item][:item_type])
-
     @item.item_type_id = @item_type.id
+
     @item.name = params[:item][:name]
+
+    if(params[:item][:remove_image] == "1")
+      remove_img(@item)
+      @item.remove_image = "1"
+    elsif(params[:item][:image] != nil)
+      @item.remote_image_url = nil
+      @item.image = params[:item][:image]
+    elsif(params[:item][:remote_image_url] != nil)
+      @item.image = nil
+      @item.remote_image_url = params[:item][:remote_image_url]
+    else
+    end
 
     respond_to do |format|
       if @item.save
@@ -133,5 +145,16 @@ class ItemsController < ApplicationController
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
+  def remove_img(item)
+    if(item.image.file != nil)
+      if(File.exist?("#{Rails.root}"+"/public"+item.image.thumb.url))
+        File.delete("#{Rails.root}"+"/public"+item.image.thumb.url)
+      end
+      if(File.exist?("#{Rails.root}"+"/public"+item.image.url))
+        File.delete("#{Rails.root}"+"/public"+item.image.url)
+      end
+    end
   end
 end

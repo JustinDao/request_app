@@ -13,7 +13,8 @@ gem 'haml-rails'
 gem 'bootstrap-sass'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
-
+gem 'carrierwave'
+gem 'rmagick'
 
 group :test, :development do
   gem 'pry'

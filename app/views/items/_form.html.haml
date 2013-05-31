@@ -1,4 +1,4 @@
-= form_for([@user, @item]) do |f|
+= form_for([@user, @item], :html => {:multipart => true}) do |f|
   - if @item.errors.any?
     #error_explanation
       %h2= "#{pluralize(@item.errors.count, "error")} prohibited this item from being saved:"
@@ -12,6 +12,21 @@
 
   .field
     = f.label :item_type
-    = f.select :item_type, @item_types.map{ |i| [i.name, i.id] }
+    = f.select :item_type, @item_types.map{ |i| [i.name, i.id] }, :selected => @item.item_type_id
+
+  .field
+    = image_tag @item.image_url(:thumb) if @item.image?
+
+  .field
+    = f.file_field :image
+
+  .field
+    = f.label :remote_image_url, "or use a URL:"
+    = f.text_field :remote_image_url
+
+  .field
+    Remove Image?
+    = f.check_box :remove_image
+    
   .actions
     = f.submit 'Save'
