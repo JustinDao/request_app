@@ -3,6 +3,8 @@
 %p
   %b Name:
   = @item.name
+  %br
+  = image_tag @item.image_url(:thumb) if @item.image?
 
 = link_to 'Edit', edit_user_item_path(current_user, @item)
 \|
