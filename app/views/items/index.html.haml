@@ -11,7 +11,9 @@
 
   - @items.each do |item|
     %tr
-      %td= image_tag item.image_url(:thumb) if item.image?
+      %td
+        - if(item.image?)
+          = link_to image_tag(item.image.thumb), item.image.url, :style => "border: none;" 
       %td= item.name
       %td= item.item_type.name
       %td= link_to 'Show', user_item_path(current_user, item)
