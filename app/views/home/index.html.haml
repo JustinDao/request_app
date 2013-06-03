@@ -1,4 +1,20 @@
 %h1 Welcome!
 
-.similar
-  %h2 You may be interested in: 
+/ - if(@new_requests.length > 0)
+/   %h2 
+/     You have some new requests!
+/   - @new_requests.each do |n|
+/     %div
+/       = @requesters[@index].first_name + " " + @requesters[@index].last_name
+/       is requesting to use 
+/       = n.item.name
+/       - @index += 1
+/ - if(@unresponded.length > 0)
+/   %h2
+/     You still have some requests to respond to!
+/   - @unresponded.each do |u|
+/     %div
+/       = @requesters[@index].first_name + " " + @requesters[@index].last_name
+/       is requesting to use 
+/       = u.item.name
+/       - @index += 1

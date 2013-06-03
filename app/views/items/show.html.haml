@@ -1,11 +1,25 @@
 %p#notice= notice
 
-%p
-  %b Name:
-  = @item.name
-  %br
-  = image_tag @item.image_url(:thumb) if @item.image?
+%table
+  %tr
+    %th
+    %th Name:
+    %th Owner:
+  
+  %tr
+    %td 
+      - if(@item.image?)
+        = link_to image_tag(@item.image.thumb), @item.image.url, :style => "border: none;" 
+    %td
+      = @item.name
+    %td
+      = @item.user.first_name + " " + @item.user.last_name
 
-= link_to 'Edit', edit_user_item_path(current_user, @item)
-\|
-= link_to 'Back', user_items_path(current_user)
+- if(@item.user != current_user)
+  %hr
+  %h3
+    Request this item from 
+    = @item.user.first_name + "!"
+
+  = render 'request_form'
+

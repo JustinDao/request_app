@@ -1,5 +1,9 @@
 %h1 Your items
 
+= link_to 'New Item', new_user_item_path(current_user)
+
+%br
+
 %table
   %tr
     %th
@@ -16,10 +20,8 @@
           = link_to image_tag(item.image.thumb), item.image.url, :style => "border: none;" 
       %td= item.name
       %td= item.item_type.name
-      %td= link_to 'Show', user_item_path(current_user, item)
+      %td= link_to 'View', user_item_path(current_user, item)
       %td= link_to 'Edit', edit_user_item_path(current_user, item)
-      %td= link_to 'Destroy', user_item_path(current_user, item), :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td= link_to 'Remove', user_item_path(current_user, item), :method => :delete,
+                    :data => { :confirm => 'Are you sure you want to remove '+ item.name + ' from your items?' }
 
-%br
-
-= link_to 'New Item', new_user_item_path(current_user)

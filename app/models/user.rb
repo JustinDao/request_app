@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   belongs_to :residence
   belongs_to :building
   has_many :item, :dependent => :destroy
+  has_many :request, :dependent => :destroy
 
   validates_presence_of :residence
 

@@ -2,8 +2,8 @@
 %html
   %head
     %title RequestApp
-    = stylesheet_link_tag    "application", :media => "all"
-    = javascript_include_tag "application"
+    = stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/redmond/jquery-ui.css", "application", :media => "all"
+    = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js", "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js", "jquery.rails.js" ,"application"
     = csrf_meta_tags
 %body
   .user_nav
@@ -12,7 +12,8 @@
       = current_user.email
       = link_to 'Home', root_path
       = link_to 'Browse', browse_path
-      = link_to 'Your Items', user_items_path(current_user)
+      = link_to 'Your Items', my_items_path
+      = link_to 'Your Requests', my_requests_path
       = link_to 'Account Settings', edit_user_registration_path
       = link_to 'Sign out', destroy_user_session_path, :method => :delete
       = render 'layouts/search'

@@ -3,7 +3,7 @@ class ItemsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    @user_id = params[:user_id].to_i
+    @user_id = params[:user_id] ? params[:user_id].to_i : current_user.id
 
     @items = Item.order(sort_column + " " + sort_direction).select{|e| e.user_id == @user_id}
 
@@ -37,6 +37,45 @@ class ItemsController < ApplicationController
     end
   end
 
+  def req
+    @user = User.find(params[:user_id])
+    @item = Item.find(params[:id])
+
+    @start = params[:start_date]
+
+    start_year = @start.split("/").last
+
+    @return = params[:return_date]
+
+    return_year = @return.split("/").last
+
+    if( (start_year != return_year && start_year < return_year) || @start <= @return )   
+      @request = Request.new(start_date: @start, return_date: @return)
+      @request.user_id = @user.id
+      @request.item_id = @item.id
+      @request.requester_id = current_user.id
+      if @request.save
+      else
+        respond_to do |format|
+          format.html { render action: "show" }
+          format.json { render json: @item.errors, status: :unprocessable_entity }
+        end
+        return
+      end
+    else
+      respond_to do |format|
+        format.html { render action: "show" }
+        format.json { render json: @item.errors, status: :unprocessable_entity }
+      end
+    end
+
+    respond_to do |format|
+      format.html { redirect_to user_item_path(@user,@item), notice: 'Item was successfully requested! ' + @user.first_name + ' will be notified.' }
+      format.json { render json: @item}
+    end
+
+  end
+
   def show
     @user_id = params[:user_id].to_i
     @item = Item.find(params[:id])
@@ -59,7 +98,6 @@ class ItemsController < ApplicationController
   end
 
   def edit
-
     @item = Item.find(params[:id])
     @user_id = params[:user_id].to_i
 

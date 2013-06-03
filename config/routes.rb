@@ -4,12 +4,23 @@ RequestApp::Application.routes.draw do
   match '/home', :to => "home#index"
   match '/browse', :to => "home#browse"
   match 'items/find', :to => "home#find"
+  match 'search', :to => "items#search"
+  match '/users/:user_id/items/:id/request', :to => "items#req", :as => "request_user_item"
+  match 'my_requests', :to => 'requests#index'
+  match 'my_items', :to => 'items#index'
 
   resources :users, :only => [] do
     resources :items do
       collection do
         post 'search'
       end
+      member do
+        post 'req'
+      end
+    end
+    resources :requests, :only => [:index, :destroy] do
+      get 'approve'
+      get 'deny'
     end
   end
 

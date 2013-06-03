@@ -1,0 +1,85 @@
+%h1 Your Requests
+
+%br
+
+- if(@requests.length != 0)
+  
+  %h2 New Requests
+
+  %table
+    %tr
+      %th Item
+      %th Requester
+      %th From
+      %th To
+      %th Approve?
+
+    - @requests.each do |r|
+      - if(r.approved == nil)
+        %tr
+          %td= r.item.name
+          %td= @requesters[@index].first_name + " " + @requesters[@index].last_name
+          - @index += 1
+          %td= r.start_date
+          %td= r.return_date
+          %td 
+            = link_to 'Approve', user_request_approve_path(current_user, r), :method => :get, 
+              :data => { :confirm => "Are you sure you want to approve this request? \n" + r.item.name + " From: " + r.start_date + " To: " + r.return_date }
+   
+          %td 
+            = link_to 'Deny', user_request_deny_path(current_user, r), :method => :get, 
+              :data => { :confirm => "Are you sure you want to deny this request? \n" + r.item.name + " From: " + r.start_date + " To: " + r.return_date }
+
+  %h2 Responded Requests
+
+  %table
+    %tr
+      %th Item
+      %th Requester
+      %th From
+      %th To
+      %th Approved?
+
+    - @requests.each do |r|
+      - if(r.approved != nil)
+        %tr
+          %td= r.item.name
+          %td= @requesters[@index].first_name + " " + @requesters[@index].last_name
+          - @index += 1
+          %td= r.start_date
+          %td= r.return_date
+          %td
+            - if(r.approved)
+              Approved
+            - else
+              Denied
+
+- if(@your_requests.length != 0)
+  %h2 Requests You've Made
+
+  %table
+    %tr
+      %th Item
+      %th Requestee
+      %th From
+      %th To
+      %th Approved?
+
+    - @your_requests.each do |yr|
+      %tr
+        %td= yr.item.name
+        %td= yr.user.first_name + " " + yr.user.last_name
+        %td= yr.start_date
+        %td= yr.return_date
+        %td
+          - if(yr.approved != nil)
+            - if(yr.approved == true)
+              .approved
+                Request Approved!
+            - else
+              .denied
+                Denied. =(
+          - else
+            Awaiting Response
+        %td= link_to 'Remove', user_request_path(current_user, yr), :method => :delete,
+                    :data => { :confirm => "Are you sure you want to remove this request? \n" + yr.item.name + " From: " + yr.start_date + " To: " + yr.return_date }

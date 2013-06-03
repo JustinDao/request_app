@@ -14,6 +14,9 @@
     = f.label :item_type
     = f.select :item_type, @item_types.map{ |i| [i.name, i.id] }, :selected => @item.item_type_id
 
+  %h4
+    Item Image:
+
   .field
     = image_tag @item.image_url(:thumb) if @item.image?
 

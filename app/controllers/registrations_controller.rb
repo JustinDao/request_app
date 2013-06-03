@@ -1,4 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
+  
   def new
   	@residences = Residence.all.sort_by{|e| e[:name]}
     super
