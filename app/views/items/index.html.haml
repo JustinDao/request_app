@@ -1,27 +1,29 @@
-%h1 Your items
-
-= link_to 'New Item', new_user_item_path(current_user)
+%h2 Your items
+%h4= link_to 'Add An Item', new_user_item_path(current_user)
 
 %br
-
-%table
-  %tr
-    %th
-    %th= sortable "name"
-    %th= sortable "item_type_id", "Type"
-    %th
-    %th
-    %th
+- if(@items.length > 0)
+  .row-fluid
+    .span12
+      .span1
+      .span2= sortable "name"
+      .span2= sortable "item_type_id", "Type"
+      .span1
+      .span1
+      .span1
 
   - @items.each do |item|
-    %tr
-      %td
-        - if(item.image?)
-          = link_to image_tag(item.image.thumb), item.image.url, :style => "border: none;" 
-      %td= item.name
-      %td= item.item_type.name
-      %td= link_to 'View', user_item_path(current_user, item)
-      %td= link_to 'Edit', edit_user_item_path(current_user, item)
-      %td= link_to 'Remove', user_item_path(current_user, item), :method => :delete,
-                    :data => { :confirm => 'Are you sure you want to remove '+ item.name + ' from your items?' }
-
+    .row-fluid
+      .span12
+        .span1
+          - if(item.image?)
+            = link_to image_tag(item.image.thumb), item.image.url, :style => "border: none;"
+        .span2= item.name
+        .span2= item.item_type.name
+        .span1= link_to 'View', user_item_path(current_user, item)
+        - if(item.user == current_user)
+          .span1= link_to 'Edit', edit_user_item_path(current_user, item)
+          .span1= link_to 'Remove', user_item_path(current_user, item), :method => :delete,
+                        :data => { :confirm => 'Are you sure you want to remove '+ item.name + ' from your items?' }
+- else
+  You don't have any items! Add some by clicking the link above!

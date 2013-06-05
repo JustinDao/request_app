@@ -16,6 +16,7 @@ gem 'bootstrap-will_paginate'
 gem 'carrierwave'
 gem 'rmagick'
 gem 'jquery-ui-rails'
+gem 'simple_form'
 
 group :test, :development do
   gem 'pry'

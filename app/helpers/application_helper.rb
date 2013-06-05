@@ -11,7 +11,7 @@ module ApplicationHelper
       end
     end
 
-    content_tag :select, name: "type" do
+    content_tag :select, name: "type", style: "width: 150px" do
       options_html.html_safe
     end
   end

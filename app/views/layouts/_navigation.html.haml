@@ -1,0 +1,22 @@
+- if user_signed_in?
+  .div{:class=>"nav-collapse collapse"}
+    %ul.nav
+      %li= link_to 'Home', root_path
+      %li= link_to 'Browse', browse_path
+      %li= link_to 'Your Items', my_items_path
+      %li= link_to 'Your Requests', my_requests_path
+      %li
+        = render 'layouts/search'
+      %li
+        .btn-group
+          %a{:class=>"btn btn-primary dropdown-toggle", "data-toggle" => "dropdown"}
+            = current_user.email 
+            .caret
+          %ul.dropdown-menu
+            %li= link_to 'Account Settings', edit_user_registration_path
+            %li= link_to 'Sign out', destroy_user_session_path, :method => :delete
+
+- else
+  = link_to 'Register', new_user_registration_path
+  or
+  = link_to 'Sign in', new_user_session_path

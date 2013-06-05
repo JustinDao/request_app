@@ -2,12 +2,21 @@ class RequestsController < ApplicationController
 
   def index
     @requests = Request.where(user_id: current_user.id).sort_by{|e| e[:created_at]}
+
+    @awaiting = []
+    @responded = []
+
     @your_requests = Request.where(requester_id: current_user.id).sort_by{|e| e[:created_at]}
 
     @requesters = []
 
     @requests.each do |req|
       @requesters.push(User.find(req.requester_id))
+      if(req.approved == nil)
+        @awaiting.push(req)
+      else
+        @responded.push(req)
+      end
     end
 
     @index = 0

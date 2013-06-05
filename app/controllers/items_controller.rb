@@ -122,6 +122,18 @@ class ItemsController < ApplicationController
       @item.item_type = ItemType.find(@item_type_id)
     end
 
+    if(params[:item][:remove_image] == "1")
+      remove_img(@item)
+      @item.remove_image = "1"
+    elsif(params[:item][:image] != nil)
+      @item.remote_image_url = nil
+      @item.image = params[:item][:image]
+    elsif(params[:item][:remote_image_url] != nil)
+      @item.image = nil
+      @item.remote_image_url = params[:item][:remote_image_url]
+    else
+    end
+
     respond_to do |format|
       if @item.save
         format.html { redirect_to user_items_path, notice: 'Item was successfully created.' }

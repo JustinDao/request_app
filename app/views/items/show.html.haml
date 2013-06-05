@@ -1,19 +1,16 @@
-%p#notice= notice
+.row-fluid
+  .span12
+    .span1
+    .span2 Name:
+    .span2 Owner:
 
-%table
-  %tr
-    %th
-    %th Name:
-    %th Owner:
-  
-  %tr
-    %td 
+.row-fluid
+  .span12
+    .span1
       - if(@item.image?)
         = link_to image_tag(@item.image.thumb), @item.image.url, :style => "border: none;" 
-    %td
-      = @item.name
-    %td
-      = @item.user.first_name + " " + @item.user.last_name
+    .span2= @item.name
+    .span2= @item.user.first_name + " " + @item.user.last_name
 
 - if(@item.user != current_user)
   %hr

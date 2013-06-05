@@ -1,25 +1,29 @@
 !!!
 %html
   %head
-    %title RequestApp
+    %meta{:charset => "utf-8"}
+    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1, maximum-scale=1"}
+    %title= content_for?(:title) ? yield(:title) : "Request App"
+    %meta{:content => "", :name => "description"}
+    %meta{:content => "", :name => "author"}
     = stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/redmond/jquery-ui.css", "application", :media => "all"
-    = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js", "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js", "jquery.rails.js" ,"application"
+    = javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js", "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js", "application"
     = csrf_meta_tags
-%body
-  .user_nav
-    - if user_signed_in?
-      Signed in as 
-      = current_user.email
-      = link_to 'Home', root_path
-      = link_to 'Browse', browse_path
-      = link_to 'Your Items', my_items_path
-      = link_to 'Your Requests', my_requests_path
-      = link_to 'Account Settings', edit_user_registration_path
-      = link_to 'Sign out', destroy_user_session_path, :method => :delete
-      = render 'layouts/search'
-
-    - else
-      = link_to 'Register', new_user_registration_path
-      or
-      = link_to 'Sign in', new_user_session_path
-  = yield
+    = yield(:head)
+  %body
+    %header.navbar.navbar-fixed-top
+      %nav.navbar-inner
+        .container
+          = render 'layouts/navigation'
+    #main{:role => "main"}
+      .container
+        .content
+          .row
+            .span12
+              = render 'layouts/messages'
+              = yield
+          %footer
+            %footer.navbar.navbar-fixed-bottom
+              %nav.navbar-inner
+                .container
+                  = render 'layouts/footer'

@@ -1,4 +1,5 @@
 = form_tag search_path, method: :post do
   = text_field_tag "search_box", nil, :placeholder => "Search...", :id => "search_box"
   = item_type_select
-  = submit_tag "Search"
+  = button_tag(:type => "submit", :class => "btn btn-default") do
+    Search 

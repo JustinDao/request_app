@@ -1,17 +1,16 @@
-%h1 Your items
+%h1 
+  Listings for
+  = @item_name
 
-%table
-  %tr
-    %th Name
-    %th Type
-    %th
+.row-fluid
+  .span12
+    .span2 Name
+    .span2 Type
+    .span2 Owner
 
   - @items.each do |item|
-    %tr
-      %td= item.name
-      %td= item.item_type.name
-      %td= link_to 'Show', user_item_path(current_user, item)
-
-%br
-
-= link_to 'New Item', new_user_item_path(current_user)
+    .span12
+      .span2= item.name
+      .span2= item.item_type.name
+      .span2= item.user.first_name + " " + item.user.last_name
+      .span2= link_to 'View Details', user_item_path(current_user, item)

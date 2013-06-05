@@ -36,7 +36,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # end
   # Create different versions of your uploaded files:
   version :thumb do
-    process :resize_to_limit => [100, 100]
+    process :resize_to_limit => [50, 50]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
@@ -47,12 +47,16 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  # def filename
+  def filename
+    if original_filename 
+      @name ||= Digest::MD5.hexdigest(File.dirname(current_path))
+      "#{@name}.#{file.extension}"
+    end
   #   begin
   #     o =  [('a'..'z'),('A'..'Z')].map{|i| i.to_a}.flatten
   #     filename  =  (0...8).map{ o[rand(o.length)] }.join
   #     filename += "." + file.extension
   #   end while (File.exist?("#{Rails.root}"+"/public/uploads/item/image/"+model.id.to_s+"/"+filename))
   #   filename if original_filename
-  # end
+  end
 end

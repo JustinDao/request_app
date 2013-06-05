@@ -7,17 +7,14 @@
 
   %div
     = f.label :first_name
-    %br
     = f.text_field :first_name, :autofocus => true
 
   %div
     = f.label :last_name
-    %br
     = f.text_field :last_name
 
   .div
     = f.label :email
-    %br
     = f.email_field :email, :autofocus => true
 
   - if devise_mapping.confirmable? && resource.pending_reconfirmation?
@@ -26,14 +23,13 @@
       = resource.unconfirmed_email
 
   .div
-    = f.label :password 
+    = f.label :password
     %i (leave blank if you don't want to change it)
     %br
     = f.password_field :password, :autocomplete => "off"
 
   .div
     = f.label :password_confirmation
-    %br
     = f.password_field :password_confirmation
 
   .div
@@ -43,12 +39,10 @@
     = f.password_field :current_password
 
   .div
-    = f.submit "Update"
+    = f.submit "Update", :class=> "btn"
 
 %h3 Cancel my account
 
 .p
   Unhappy?
-  = button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete
-
-= link_to "Back", :back
+  = button_to "Cancel my account", registration_path(resource_name), :class => "btn btn-danger", :data => { :confirm => "Are you sure?" }, :method => :delete
